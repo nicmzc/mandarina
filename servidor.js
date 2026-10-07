@@ -12,7 +12,8 @@ const tipos = {
     ".html": "text/html; charset=utf-8",
    ".js": "text/javascript; charset=utf-8",
     ".webmanifest": "application/manifest+json",
-    ".png": "image/png"
+    ".png": "image/png",
+    ".jpeg": "image/jpeg"
 };
 
 // Muestra la página del juego
