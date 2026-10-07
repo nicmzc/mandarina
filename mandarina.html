@@ -5,14 +5,19 @@
     <meta name="viewport"
     content="width=device-width, 
     initial-scale=1.0">
-    <title>Mandarina 3D</title>
+    <title>Mandarina 3D</title> <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1a1a24">
 </head>
 
 <body style="margin: 0; overflow: hidden;">
    
     <canvas id="juego"></canvas>
     
-    <script src="juego.js"></script>
+    <script src="juego.js"></script> <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js");
+        }
+    </script> 
     
 </body>
 </html>

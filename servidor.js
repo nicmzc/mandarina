@@ -4,10 +4,15 @@ const path = require("path");
 const WebSocket = require("ws");
 
 const PUERTO = process.env.PORT || 3000;
-const permitidos = ["mandarina.html", "juego.js"];
+const permitidos = [
+    "mandarina.html", "juego.js", "manifest.webmanifest",
+    "sw.js", "icono-192.png", "icono-512.png"
+];
 const tipos = {
     ".html": "text/html; charset=utf-8",
-    ".js": "text/javascript; charset=utf-8"
+   ".js": "text/javascript; charset=utf-8",
+    ".webmanifest": "application/manifest+json",
+    ".png": "image/png"
 };
 
 // Muestra la página del juego
