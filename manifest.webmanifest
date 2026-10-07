@@ -6,8 +6,8 @@
   "orientation": "landscape",
   "background_color": "#1a1a24",
   "theme_color": "#1a1a24",
-    "icons": [
-    { "src": "icono.mandarina.jpeg", "sizes": "192x192", "type": "image/jpeg" },
-    { "src": "icono.mandarina2.jpeg", "sizes": "512x512", "type": "image/jpeg" }
+     "icons": [
+    { "src": "icono.mandarina.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icono.mandarina2.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

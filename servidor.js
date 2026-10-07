@@ -6,7 +6,7 @@ const WebSocket = require("ws");
 const PUERTO = process.env.PORT || 3000;
 const permitidos = [
     "mandarina.html", "juego.js", "manifest.webmanifest",
-    "sw.js", "icono.mandarina.jpeg", "icono.mandarina2.jpeg"
+    "sw.js", "icono.mandarina.png", "icono.mandarina2.png"
 ];
 const tipos = {
     ".html": "text/html; charset=utf-8",
