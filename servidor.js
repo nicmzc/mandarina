@@ -6,14 +6,16 @@ const WebSocket = require("ws");
 const PUERTO = process.env.PORT || 3000;
 const permitidos = [
     "mandarina.html", "juego.js", "manifest.webmanifest",
-    "sw.js", "icono.mandarina.png", "icono.mandarina2.png"
+    "sw.js", "icono.mandarina.png", "icono.mandarina2.png",
+    "assetlinks.json"
 ];
 const tipos = {
     ".html": "text/html; charset=utf-8",
    ".js": "text/javascript; charset=utf-8",
     ".webmanifest": "application/manifest+json",
     ".png": "image/png",
-    ".jpeg": "image/jpeg"
+    ".jpeg": "image/jpeg",
+    ".json": "application/json"
 };
 
 // Muestra la página del juego

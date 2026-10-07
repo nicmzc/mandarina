@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.onrender.mandarina_t21r.twa",
+        "sha256_cert_fingerprints": ["0B:98:35:E3:14:65:8E:F7:B6:B7:F9:C2:E9:6E:36:91:80:B7:F8:88:3D:51:BE:FB:62:CE:C4:02:C0:39:F2:59"]
+      }
+    }]
