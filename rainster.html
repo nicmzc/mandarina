@@ -48,7 +48,6 @@
             left: 3vw;
             margin: 0;
             padding: 0.3rem 4rem 0.3rem 1.5rem;
-            background: linear-gradient(to right, rgba(110, 0, 0, 0.8), rgba(110, 0, 0, 0));
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(2.2rem, 7vw, 5rem);
             color: #000000;
@@ -101,6 +100,176 @@
             letter-spacing: 2px;
             color: #dddddd;
         }
+
+        /* ===== PANTALLA JUGAR ===== */
+        #pantallaJugar {
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+        }
+        #menu.jugar #pantallaInicio { transform: translateX(-100%); }
+        #menu.jugar #pantallaJugar { transform: translateX(0); }
+
+        .pestanas {
+            display: flex;
+            align-items: stretch;
+            gap: 1.5rem;
+            padding: 4vh 3vw 1.2vh;
+            border-bottom: 2px solid rgba(255, 215, 220, 0.85);
+            box-shadow: 0 3px 14px rgba(255, 0, 0, 0.3);
+        }
+        .pestana {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.2rem, 3.2vw, 2.4rem);
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.4);
+            text-shadow: 0 0 10px #7a0000;
+            cursor: pointer;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .pestana:hover { color: rgba(255, 255, 255, 0.75); }
+        .pestana.activa {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff0000, 0 0 25px #7a0000;
+        }
+        .separador { width: 2px; background: rgba(255, 215, 220, 0.85); }
+
+        .cuerpoJugar { flex: 1; overflow-y: auto; padding: 2.5vh 3vw; }
+
+        .partida {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.6rem;
+            margin-bottom: 1.6vh;
+            border: 2px solid rgba(255, 215, 220, 0.85);
+            border-radius: 20px;
+            background: rgba(50, 0, 0, 0.55);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .partida:hover {
+            transform: translateX(6px);
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
+        }
+        .partidaNombre {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff0000, 0 0 22px #7a0000;
+        }
+        .partidaInfo {
+            margin-top: 0.3rem;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(0.8rem, 1.6vw, 1.1rem);
+            color: #d9b8b8;
+        }
+        .partidaBorrar {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0.6;
+            text-shadow: 0 0 8px #ff0000;
+        }
+        .partidaBorrar:hover { opacity: 1; }
+        .vacio {
+            margin-top: 4vh;
+            text-align: center;
+            font-family: 'Cinzel Decorative', serif;
+            letter-spacing: 2px;
+            color: #d9b8b8;
+        }
+
+        .pieJugar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2vh 3vw 3vh;
+            border-top: 2px solid rgba(255, 215, 220, 0.85);
+            box-shadow: 0 -3px 14px rgba(255, 0, 0, 0.3);
+        }
+        .pieJugar .enlace { position: absolute; left: 3vw; }
+        .botonCrear {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.1rem, 2.6vw, 1.8rem);
+            letter-spacing: 3px;
+            color: #ffffff;
+            background: rgba(60, 0, 0, 0.6);
+            border: 2px solid rgba(255, 215, 220, 0.85);
+            border-radius: 24px;
+            padding: 0.6rem 2.4rem;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff0000, 0 0 25px #7a0000;
+            transition: box-shadow 0.2s;
+        }
+        .botonCrear:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+        .botonCrear[hidden] { display: none; }
+
+        .enlace {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            letter-spacing: 2px;
+            color: #ffffff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff0000, 0 0 25px #7a0000;
+        }
+
+        /* Ventanita para ponerle nombre a la partida */
+        #modalNombre {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+        }
+        #modalNombre.visible { display: flex; }
+        .cajaModal {
+            min-width: min(90vw, 420px);
+            padding: 2rem 2.4rem;
+            border: 2px solid rgba(255, 215, 220, 0.85);
+            border-radius: 22px;
+            background: #160000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
+        }
+        .tituloModal {
+            margin: 0 0 1.2rem;
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: normal;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff0000, 0 0 22px #7a0000;
+        }
+        #entradaNombre {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.6rem 0.2rem;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            color: #ffffff;
+            background: none;
+            border: none;
+            border-bottom: 2px solid rgba(255, 215, 220, 0.85);
+            outline: none;
+        }
+        .botonesModal {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.6rem;
+        }
     </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
@@ -121,6 +290,35 @@
                 <button class="boton" id="btnConfig">Configuración</button>
             </div>
             <div id="version">V.1.0</div>
+        </div>
+
+        <div id="pantallaJugar" class="pantalla">
+            <div class="pestanas">
+                <button class="pestana activa" id="pestanaPartidas">Partidas Guardadas</button>
+                <div class="separador"></div>
+                <button class="pestana" id="pestanaServidores">Servidores</button>
+            </div>
+
+            <div class="cuerpoJugar" id="listaPartidas"></div>
+            <div class="cuerpoJugar" id="listaServidores" hidden>
+                <!-- Acá va la lista de servidores -->
+            </div>
+
+            <div class="pieJugar">
+                <button class="enlace" id="btnVolverJugar">‹ Volver</button>
+                <button class="botonCrear" id="btnCrear">Crear nueva partida</button>
+            </div>
+
+            <div id="modalNombre">
+                <div class="cajaModal">
+                    <h2 class="tituloModal">Nombre de la partida</h2>
+                    <input id="entradaNombre" type="text" maxlength="30" autocomplete="off">
+                    <div class="botonesModal">
+                        <button class="enlace" id="btnCancelarNombre">Cancelar</button>
+                        <button class="enlace" id="btnAceptarNombre">Crear</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="pantallaConfig" class="pantalla">
@@ -157,16 +355,9 @@
             window.addEventListener("resize", medir);
             medir();
 
-            // Chispas que suben
             const chispas = [];
             for (let i = 0; i < 70; i++) {
-                chispas.push({
-                    x: Math.random() * ancho,
-                    y: Math.random() * alto,
-                    v: 6 + Math.random() * 18,
-                    r: 0.6 + Math.random() * 1.6,
-                    f: Math.random() * 6.28
-                });
+                chispas.push({ x: Math.random() * ancho, y: Math.random() * alto, v: 6 + Math.random() * 18, r: 0.6 + Math.random() * 1.6, f: Math.random() * 6.28 });
             }
 
             let anterior = performance.now();
@@ -176,39 +367,38 @@
                 const dt = Math.min((ahora - anterior) / 1000, 0.05);
                 anterior = ahora;
                 const t = ahora / 1000;
-
                 ctx.clearRect(0, 0, ancho, alto);
-
-                // Chispas
                 for (const c of chispas) {
                     c.y -= c.v * dt;
                     c.x += Math.sin(t + c.f) * 6 * dt;
-                    if (c.y < -5) {
-                        c.y = alto + 5;
-                        c.x = Math.random() * ancho;
-                    }
+                    if (c.y < -5) { c.y = alto + 5; c.x = Math.random() * ancho; }
                     const a = 0.25 + 0.75 * Math.abs(Math.sin(t * 1.5 + c.f));
                     ctx.fillStyle = "rgba(255,140,40," + a.toFixed(2) + ")";
                     ctx.beginPath();
                     ctx.arc(c.x, c.y, c.r, 0, 6.2832);
                     ctx.fill();
                 }
-
-                // Puntitos (se deslizan hacia la izquierda al abrir Configuración)
+                // Puntitos: el campo sigue hacia la derecha, así que al deslizar siempre aparecen más detrás
                 desp += (destino - desp) * Math.min(1, 4 * dt);
                 const paso = Math.max(26, ancho / 48);
                 const maximo = paso * 0.42;
+                const p = Math.min(1, Math.max(0, -desp / recorrido()));
+                const vida = p < 0.6 ? 1 : 1 - (p - 0.6) / 0.4;
 
-                for (let y = 0; y < alto + paso; y += paso) {
-                    for (let x = 0; x < ancho + paso; x += paso) {
-                        const d = y / alto + 1.46 * (x / ancho) - 1.76;
-                        if (d <= 0) continue;
+                if (vida > 0.02) {
+                    ctx.fillStyle = "rgba(255,200,210,0.85)";
+                    const primera = Math.floor((-paso - desp) / paso);
+                    const ultima = Math.ceil((ancho + paso - desp) / paso);
+                    for (let k = primera; k <= ultima; k++) {
+                        const x = k * paso;
                         const px = x + desp;
-                        if (px < -paso) continue;
-                        const onda = 0.65 + 0.35 * Math.sin(t * 2 - ((x + y) / paso) * 0.5);
-                        const lado = maximo * Math.min(1, d * 1.8) * onda;
-                        ctx.fillStyle = "rgba(255,200,210,0.85)";
-                        ctx.fillRect(px - lado / 2, y - lado / 2, lado, lado);
+                        for (let y = 0; y < alto + paso; y += paso) {
+                            const d = y / alto + 1.46 * (x / ancho) - 1.76;
+                            if (d <= 0) continue;
+                            const onda = 0.65 + 0.35 * Math.sin(t * 2 - ((x + y) / paso) * 0.5);
+                            const lado = maximo * Math.min(1, d * 1.8) * onda * vida;
+                            ctx.fillRect(px - lado / 2, y - lado / 2, lado, lado);
+                        }
                     }
                 }
 
@@ -216,7 +406,10 @@
             }
             requestAnimationFrame(animar);
 
-            // Volver a encender la animación del menú
+            function recorrido() {
+                return ancho * 1.3;
+            }
+
             function reanudar() {
                 if (corriendo) return;
                 corriendo = true;
@@ -224,7 +417,6 @@
                 requestAnimationFrame(animar);
             }
 
-            // Botones
             const btnConfigJuego = document.getElementById("btnConfigJuego");
             let enJuego = false;
             let temporizador = null;
@@ -234,6 +426,7 @@
                 menu.classList.add("oculto");
                 temporizador = setTimeout(function () {
                     menu.style.display = "none";
+                    menu.classList.remove("jugar");
                     menu.classList.remove("config");
                     corriendo = false;
                     desp = 0;
@@ -245,11 +438,171 @@
                 }
             }
 
-            document.getElementById("btnJugar").addEventListener("click", entrarAlJuego);
+            // ===== PARTIDAS GUARDADAS =====
+            const CLAVE_PARTIDAS = "rainster_partidas";
+            let partidaActual = null;
+
+            // Lee las partidas guardadas en este dispositivo
+            function leerPartidas() {
+                try {
+                    const datos = JSON.parse(localStorage.getItem(CLAVE_PARTIDAS));
+                    return Array.isArray(datos) ? datos : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            // Guarda la lista de partidas
+            function guardarPartidas(lista) {
+                try {
+                    localStorage.setItem(CLAVE_PARTIDAS, JSON.stringify(lista));
+                } catch (e) {}
+            }
+
+            // Convierte una fecha en texto, por ejemplo "10/10/2026 01:54"
+            function fechaCorta(ms) {
+                const d = new Date(ms);
+                return d.toLocaleDateString("es") + " " + d.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
+            }
+
+            // Dibuja la lista de partidas guardadas
+            function dibujarPartidas() {
+                const contenedor = document.getElementById("listaPartidas");
+                contenedor.innerHTML = "";
+                const lista = leerPartidas();
+
+                if (lista.length === 0) {
+                    const vacio = document.createElement("p");
+                    vacio.className = "vacio";
+                    vacio.textContent = "No tenés partidas guardadas todavía";
+                    contenedor.appendChild(vacio);
+                    return;
+                }
+
+                lista.sort(function (a, b) { return b.ultima - a.ultima; });
+
+                lista.forEach(function (partida) {
+                    const tarjeta = document.createElement("div");
+                    tarjeta.className = "partida";
+
+                    const textos = document.createElement("div");
+                    const nombre = document.createElement("div");
+                    nombre.className = "partidaNombre";
+                    nombre.textContent = partida.nombre;
+                    const info = document.createElement("div");
+                    info.className = "partidaInfo";
+                    info.textContent = "Creada: " + fechaCorta(partida.creada) + "  ·  Última vez: " + fechaCorta(partida.ultima);
+                    textos.appendChild(nombre);
+                    textos.appendChild(info);
+
+                    const borrar = document.createElement("button");
+                    borrar.className = "partidaBorrar";
+                    borrar.textContent = "✕";
+                    borrar.title = "Borrar partida";
+                    borrar.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        borrarPartida(partida.id);
+                    });
+
+                    tarjeta.addEventListener("click", function () { abrirPartida(partida.id); });
+                    tarjeta.appendChild(textos);
+                    tarjeta.appendChild(borrar);
+                    contenedor.appendChild(tarjeta);
+                });
+            }
+
+            // Cambia entre "Partidas Guardadas" y "Servidores"
+            function mostrarPestana(cual) {
+                const enPartidas = (cual === "partidas");
+                document.getElementById("pestanaPartidas").classList.toggle("activa", enPartidas);
+                document.getElementById("pestanaServidores").classList.toggle("activa", !enPartidas);
+                document.getElementById("listaPartidas").hidden = !enPartidas;
+                document.getElementById("listaServidores").hidden = enPartidas;
+                document.getElementById("btnCrear").hidden = !enPartidas;
+            }
+
+            // Entra al juego con una partida guardada
+            function abrirPartida(id) {
+                const lista = leerPartidas();
+                const partida = lista.find(function (p) { return p.id === id; });
+                if (!partida) return;
+                partida.ultima = Date.now();
+                guardarPartidas(lista);
+                partidaActual = id;
+                entrarAlJuego();
+            }
+
+            // Borra una partida (pide confirmación)
+            function borrarPartida(id) {
+                const lista = leerPartidas();
+                const partida = lista.find(function (p) { return p.id === id; });
+                if (!partida) return;
+                if (!confirm('¿Borrar la partida "' + partida.nombre + '"?')) return;
+                guardarPartidas(lista.filter(function (p) { return p.id !== id; }));
+                dibujarPartidas();
+            }
+
+            // Crea una partida nueva y entra al juego
+            function crearPartida(nombre) {
+                const lista = leerPartidas();
+                const ahora = Date.now();
+                const partida = { id: "p" + ahora, nombre: nombre, creada: ahora, ultima: ahora };
+                lista.push(partida);
+                guardarPartidas(lista);
+                partidaActual = partida.id;
+                entrarAlJuego();
+            }
+
+            // Ventanita para ponerle nombre a la partida nueva
+            const modalNombre = document.getElementById("modalNombre");
+            const entradaNombre = document.getElementById("entradaNombre");
+
+            function abrirModalNombre() {
+                entradaNombre.value = "Partida " + (leerPartidas().length + 1);
+                modalNombre.classList.add("visible");
+                entradaNombre.focus();
+                entradaNombre.select();
+            }
+
+            function cerrarModalNombre() {
+                modalNombre.classList.remove("visible");
+            }
+
+            function confirmarNombre() {
+                const nombre = entradaNombre.value.trim() || "Partida sin nombre";
+                cerrarModalNombre();
+                crearPartida(nombre.slice(0, 30));
+            }
+
+            // Botones de esta sección
+            document.getElementById("btnJugar").addEventListener("click", function () {
+                dibujarPartidas();
+                mostrarPestana("partidas");
+                menu.classList.add("jugar");
+                destino = -recorrido();
+            });
+
+            document.getElementById("btnVolverJugar").addEventListener("click", function () {
+                menu.classList.remove("jugar");
+                destino = 0;
+            });
+
+            document.getElementById("pestanaPartidas").addEventListener("click", function () { mostrarPestana("partidas"); });
+            document.getElementById("pestanaServidores").addEventListener("click", function () { mostrarPestana("servidores"); });
+            document.getElementById("btnCrear").addEventListener("click", abrirModalNombre);
+            document.getElementById("btnAceptarNombre").addEventListener("click", confirmarNombre);
+            document.getElementById("btnCancelarNombre").addEventListener("click", cerrarModalNombre);
+
+            entradaNombre.addEventListener("keydown", function (e) {
+                e.stopPropagation(); // para que el juego no mueva al jugador mientras escribís
+                if (e.key === "Enter") confirmarNombre();
+                if (e.key === "Escape") cerrarModalNombre();
+            });
+            entradaNombre.addEventListener("keyup", function (e) { e.stopPropagation(); });
 
             document.getElementById("btnConfig").addEventListener("click", function () {
                 menu.classList.add("config");
-                destino = -ancho * 1.1;
+                destino = -recorrido();
             });
 
             btnConfigJuego.addEventListener("click", function () {
@@ -259,7 +612,7 @@
                 reanudar();
                 menu.style.display = "block";
                 menu.classList.add("config");
-                desp = -ancho * 1.1;
+                desp = -recorrido();
                 destino = desp;
                 void menu.offsetWidth;
                 menu.classList.remove("oculto");
@@ -273,6 +626,7 @@
                     destino = 0;
                 }
             });
+
         })();
     </script>
 
