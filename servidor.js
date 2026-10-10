@@ -5,8 +5,8 @@ const WebSocket = require("ws");
 
 const PUERTO = process.env.PORT || 3000;
 const permitidos = [
-    "mandarina.html", "juego.js", "manifest.webmanifest",
-    "sw.js", "icono.mandarina.png", "icono.mandarina2.png",
+    "rainster.html", "juego.js", "manifest.webmanifest",
+    "sw.js", "icono.rainster.png", "icono.rainster2.png",
     "assetlinks.json"
 ];
 const tipos = {
@@ -21,7 +21,7 @@ const tipos = {
 // Muestra la página del juego
 const servidor = http.createServer(function (req, res) {
     let pedido = req.url.split("?")[0];
-    if (pedido === "/") pedido = "/mandarina.html";
+    if (pedido === "/") pedido = "/rainster.html";
 
     const nombre = path.basename(pedido);
     if (!permitidos.includes(nombre)) {
