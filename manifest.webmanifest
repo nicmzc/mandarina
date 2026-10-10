@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Mandarina 3D",
-  "short_name": "Mandarina",
+  "name": "Rainster",
+  "short_name": "Rainster",
   "lang": "es",
   "start_url": "/",
   "scope": "/",
@@ -10,8 +10,8 @@
   "background_color": "#1a1a24",
   "theme_color": "#1a1a24",
   "icons": [
-    { "src": "icono.mandarina.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icono.mandarina2.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icono.mandarina2.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icono.rainster.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icono.rainster2.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icono.rainster2.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

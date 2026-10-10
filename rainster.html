@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainster</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1a1a24">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        #menu {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 92% 4%, rgba(170, 0, 0, 0.55), transparent 45%),
+                radial-gradient(circle at 8% 92%, rgba(120, 0, 0, 0.45), transparent 40%),
+                radial-gradient(circle at 40% 30%, #2a0000 0%, #0d0000 55%, #000 90%);
+            transition: opacity 0.6s;
+        }
+        #menu.oculto { opacity: 0; pointer-events: none; }
+
+        #puntos {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .pantalla {
+            position: absolute;
+            inset: 0;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.2, 1);
+        }
+        #pantallaConfig { transform: translateX(100%); }
+        #menu.config #pantallaInicio { transform: translateX(-100%); }
+        #menu.config #pantallaConfig { transform: translateX(0); }
+
+        .titulo {
+            position: absolute;
+            top: 6vh;
+            left: 3vw;
+            margin: 0;
+            padding: 0.3rem 4rem 0.3rem 1.5rem;
+            background: linear-gradient(to right, rgba(110, 0, 0, 0.8), rgba(110, 0, 0, 0));
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            color: #000000;
+            letter-spacing: 6px;
+            text-shadow: 0 0 10px #ff0000, 0 0 30px #7a0000, 0 0 60px #400000;
+            animation: flicker 5s infinite;
+        }
+        .titulo.chico { font-size: clamp(1.8rem, 5vw, 3.5rem); }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            45% { opacity: 1; }
+            50% { opacity: 0.4; }
+            55% { opacity: 1; }
+            80% { opacity: 0.8; }
+        }
+
+        .botones {
+            position: absolute;
+            right: 3vw;
+            bottom: 12vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2rem;
+        }
+        .boton {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+            letter-spacing: 3px;
+            color: #ffffff;
+            background: linear-gradient(to left, rgba(30, 0, 0, 0.9), rgba(60, 0, 0, 0.85) 70%, transparent);
+            border: none;
+            padding: 0.3rem 1.2rem 0.3rem 4rem;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff0000, 0 0 25px #7a0000;
+            transition: transform 0.2s, text-shadow 0.2s;
+        }
+        .boton:hover {
+            transform: translateX(-10px);
+            text-shadow: 0 0 14px #ff2a2a, 0 0 40px #b00000;
+        }
+
+        #version {
+            position: absolute;
+            left: 3vw;
+            bottom: 4vh;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #dddddd;
+        }
+    </style>
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+    <canvas id="juego"></canvas>
+
+    <!-- Botón de Configuración dentro del juego -->
+    <button id="btnConfigJuego" class="boton" style="display:none; position:fixed; top:20px; right:20px; z-index:900; font-size:1.1rem; padding:0.3rem 1.2rem;">Configuración</button>
+
+    <!-- MENÚ DE INICIO -->
+    <div id="menu">
+        <canvas id="puntos"></canvas>
+
+        <div id="pantallaInicio" class="pantalla">
+            <h1 class="titulo">Rainster</h1>
+            <div class="botones">
+                <button class="boton" id="btnJugar">Jugar</button>
+                <button class="boton" id="btnConfig">Configuración</button>
+            </div>
+            <div id="version">V.1.0</div>
+        </div>
+
+        <div id="pantallaConfig" class="pantalla">
+            <h1 class="titulo chico">Configuración</h1>
+            <!-- Acá van las opciones de configuración -->
+            <div class="botones" style="bottom: 8vh;">
+                <button class="boton" id="btnVolver">Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="juego.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js");
+        }
+    </script>
+
+    <script>
+        (function () {
+            const menu = document.getElementById("menu");
+            const lienzo = document.getElementById("puntos");
+            const ctx = lienzo.getContext("2d");
+            let ancho = 0;
+            let alto = 0;
+            let corriendo = true;
+            let desp = 0;
+            let destino = 0;
+
+            function medir() {
+                ancho = lienzo.width = window.innerWidth;
+                alto = lienzo.height = window.innerHeight;
+            }
+            window.addEventListener("resize", medir);
+            medir();
+
+            // Chispas que suben
+            const chispas = [];
+            for (let i = 0; i < 70; i++) {
+                chispas.push({
+                    x: Math.random() * ancho,
+                    y: Math.random() * alto,
+                    v: 6 + Math.random() * 18,
+                    r: 0.6 + Math.random() * 1.6,
+                    f: Math.random() * 6.28
+                });
+            }
+
+            let anterior = performance.now();
+
+            function animar(ahora) {
+                if (!corriendo) return;
+                const dt = Math.min((ahora - anterior) / 1000, 0.05);
+                anterior = ahora;
+                const t = ahora / 1000;
+
+                ctx.clearRect(0, 0, ancho, alto);
+
+                // Chispas
+                for (const c of chispas) {
+                    c.y -= c.v * dt;
+                    c.x += Math.sin(t + c.f) * 6 * dt;
+                    if (c.y < -5) {
+                        c.y = alto + 5;
+                        c.x = Math.random() * ancho;
+                    }
+                    const a = 0.25 + 0.75 * Math.abs(Math.sin(t * 1.5 + c.f));
+                    ctx.fillStyle = "rgba(255,140,40," + a.toFixed(2) + ")";
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.r, 0, 6.2832);
+                    ctx.fill();
+                }
+
+                // Puntitos (se deslizan hacia la izquierda al abrir Configuración)
+                desp += (destino - desp) * Math.min(1, 4 * dt);
+                const paso = Math.max(26, ancho / 48);
+                const maximo = paso * 0.42;
+
+                for (let y = 0; y < alto + paso; y += paso) {
+                    for (let x = 0; x < ancho + paso; x += paso) {
+                        const d = y / alto + 1.46 * (x / ancho) - 1.76;
+                        if (d <= 0) continue;
+                        const px = x + desp;
+                        if (px < -paso) continue;
+                        const onda = 0.65 + 0.35 * Math.sin(t * 2 - ((x + y) / paso) * 0.5);
+                        const lado = maximo * Math.min(1, d * 1.8) * onda;
+                        ctx.fillStyle = "rgba(255,200,210,0.85)";
+                        ctx.fillRect(px - lado / 2, y - lado / 2, lado, lado);
+                    }
+                }
+
+                requestAnimationFrame(animar);
+            }
+            requestAnimationFrame(animar);
+
+            // Volver a encender la animación del menú
+            function reanudar() {
+                if (corriendo) return;
+                corriendo = true;
+                anterior = performance.now();
+                requestAnimationFrame(animar);
+            }
+
+            // Botones
+            const btnConfigJuego = document.getElementById("btnConfigJuego");
+            let enJuego = false;
+            let temporizador = null;
+
+            function entrarAlJuego() {
+                enJuego = true;
+                menu.classList.add("oculto");
+                temporizador = setTimeout(function () {
+                    menu.style.display = "none";
+                    menu.classList.remove("config");
+                    corriendo = false;
+                    desp = 0;
+                    destino = 0;
+                }, 700);
+                btnConfigJuego.style.display = "block";
+                if (!("ontouchstart" in window)) {
+                    try { document.getElementById("juego").requestPointerLock(); } catch (e) {}
+                }
+            }
+
+            document.getElementById("btnJugar").addEventListener("click", entrarAlJuego);
+
+            document.getElementById("btnConfig").addEventListener("click", function () {
+                menu.classList.add("config");
+                destino = -ancho * 1.1;
+            });
+
+            btnConfigJuego.addEventListener("click", function () {
+                clearTimeout(temporizador);
+                try { document.exitPointerLock(); } catch (e) {}
+                btnConfigJuego.style.display = "none";
+                reanudar();
+                menu.style.display = "block";
+                menu.classList.add("config");
+                desp = -ancho * 1.1;
+                destino = desp;
+                void menu.offsetWidth;
+                menu.classList.remove("oculto");
+            });
+
+            document.getElementById("btnVolver").addEventListener("click", function () {
+                if (enJuego) {
+                    entrarAlJuego();
+                } else {
+                    menu.classList.remove("config");
+                    destino = 0;
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

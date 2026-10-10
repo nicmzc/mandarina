@@ -1,11 +1,11 @@
-const CACHE = "mandarina-v1";
+const CACHE = "rainster-v1";
 const ARCHIVOS = [
     "/",
-    "/mandarina.html",
+    "/rainster.html",
     "/juego.js",
     "/manifest.webmanifest",
-    "/icono.mandarina.png",
-    "/icono.mandarina2.png"
+    "/icono.rainster.png",
+    "/icono.rainster2.png"
 ];
 
 // Al instalar: guarda los archivos del juego
